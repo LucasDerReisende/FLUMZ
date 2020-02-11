@@ -11,9 +11,8 @@ class Playground:
     def __init__(self, x_max, y_max):
         self.x_max = x_max
         self.y_max = y_max
-        self.tank1 = Tank(0.1, randint(0, x_max), randint(0, y_max), randint(0, 359))
-        self.tank2 = Tank(0.1, randint(0, x_max), randint(0, y_max), randint(0, 359))
-
+        self.tank1 = Tank(0.1, randint(0, x_max), randint(0, y_max), randint(0, 359), 0)
+        self.tank2 = Tank(0.1, randint(0, x_max), randint(0, y_max), randint(0, 359), 1)
 
     def _do_timestep(self):
         objects_to_remove = []
@@ -40,7 +39,9 @@ class Playground:
         elif player_1_result == 'left':
             self.tank1.turn_left()
         elif player_1_result == 'shoot':
-            self.projectiles_array.append(self.tank1.shoot_projectile())
+            projectile = self.tank1.shoot_projectile()
+            if projectile != None:
+                self.projectiles_array.append(projectile)
 
         player_2_result = do_move_player_2()
         if player_2_result == 'right':
@@ -49,12 +50,16 @@ class Playground:
             self.tank2.turn_left()
         elif player_2_result == 'shoot':
             projectile = self.tank2.shoot_projectile()
-            self.projectiles_array.append(projectile)
+            if projectile != None:
+                self.projectiles_array.append(projectile)
 
         return 'still playing'
 
     def start_game(self):
+        c = 0
         while True:
+            print(c)
+            c += 1
             timestep_result = self._do_timestep()
             if timestep_result != 'still playing':
                 return timestep_result

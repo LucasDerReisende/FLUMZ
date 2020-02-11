@@ -4,12 +4,13 @@ import numpy as np
 
 class Projectile:
 
-    def __init__(self, speed, x, y, direction, radius):
+    def __init__(self, speed, x, y, direction, radius, tank_index):
         self.speed = speed
         self.x = x
         self.y = y
         self.direction = direction
         self.radius = radius
+        self.tank_index = tank_index
 
     def move_timestep(self, x_max, y_max):
         if 0 <= self.x + sin(self.direction) * self.speed <= x_max:
@@ -20,8 +21,11 @@ class Projectile:
     def is_hitting_tank(self, tanks):
         arr = []
         for i in tanks:
-            if (i.x - self.x) ** 2 + (i.y - self.y) ** 2 <= self.radius ** 2:
-                arr.append(True)
+            if self.tank_index != len(arr):
+                if (i.x - self.x) ** 2 + (i.y - self.y) ** 2 <= self.radius ** 2:
+                    arr.append(True)
+                else:
+                    arr.append(False)
             else:
                 arr.append(False)
         return arr

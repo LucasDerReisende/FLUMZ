@@ -10,11 +10,12 @@ class Tank:
     _projectile_speed = 0.5
     _projectile_radius = 1.0
 
-    def __init__(self, speed, x, y, direction):
+    def __init__(self, speed, x, y, direction, tank_index):
         self.speed = speed
         self.x = x
         self.y = y
         self.direction = direction
+        self.tank_index = tank_index
 
     def move_timestep(self, x_max, y_max):
         if 0 <= self.x + sin(self.direction) * self.speed <= x_max:
@@ -25,14 +26,12 @@ class Tank:
 
     def turn_right(self):
         self.direction += self._delta_angle
-        self._current_charge += 1
 
     def turn_left(self):
         self.direction -= self._delta_angle
-        self._current_charge += 1
 
     def shoot_projectile(self):
         if self._current_charge >= self._cooldown:
             self._current_charge = 0
-            projectile = Projectile(self._projectile_speed, self.x, self.y, self.direction, self._projectile_radius)
+            projectile = Projectile(self._projectile_speed, self.x, self.y, self.direction, self._projectile_radius, self.tank_index)
             return projectile
