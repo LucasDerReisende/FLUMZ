@@ -13,10 +13,12 @@ class Projectile:
         self.tank_index = tank_index
 
     def move_timestep(self, x_max, y_max):
-        if 0 <= self.x + sin(self.direction) * self.speed <= x_max:
-            self.x += sin(self.direction) * self.speed
-        if 0 <= self.y + cos(self.direction) * self.speed < y_max:
-            self.y += cos(self.direction) * self.speed
+        #if 0 <= self.x + sin(self.direction) * self.speed <= x_max:
+        #    self.x += sin(self.direction) * self.speed
+        #if 0 <= self.y + cos(self.direction) * self.speed < y_max:
+        #    self.y += cos(self.direction) * self.speed
+        self.x += sin(self.direction) * self.speed
+        self.y += cos(self.direction) * self.speed
 
     def is_hitting_tank(self, tanks):
         arr = []
